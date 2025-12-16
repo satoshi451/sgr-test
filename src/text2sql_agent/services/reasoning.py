@@ -22,10 +22,12 @@ class ReasoningService:
             else None
         )
 
-    def generate_sql(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+    def generate_sql(
+        self, payload: Dict[str, Any], schema: Dict[str, Any] | None = None
+    ) -> Dict[str, Any]:
         user_query = payload.get("query") or payload.get("message") or ""
         context = payload.get("context", {})
-        schema_info = self.metadata_service.describe_allowed_schemas()
+        schema_info = schema or self.metadata_service.describe_allowed_schemas()
 
         if self.client:
             response = self.client.run(
