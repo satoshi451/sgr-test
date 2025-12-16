@@ -9,5 +9,30 @@
 - Поддержка проверок качества данных через шаблонные SQL-подсказки.
 - Интеграция с приватной LLM (OpenAPI-совместимый интерфейс).
 
+## Быстрый старт
+1. Установите `uv` и создайте окружение:
+   ```bash
+   uv sync
+   ```
+2. Запустите dev-сервер FastAPI:
+   ```bash
+   uv run uvicorn text2sql_agent.app:app --reload --host 0.0.0.0 --port 8000
+   ```
+3. Настройте переменные окружения для подключения:
+   - `TEXT2SQL_TRINO_HOST`, `TEXT2SQL_TRINO_PORT`, `TEXT2SQL_TRINO_USER`, `TEXT2SQL_TRINO_CATALOG`
+   - `TEXT2SQL_WHITELIST__SCHEMAS` и `TEXT2SQL_WHITELIST__TABLES` (список через запятую)
+   - `TEXT2SQL_LLM__BASE_URL`, `TEXT2SQL_LLM__MODEL`, `TEXT2SQL_LLM__API_KEY`
+
+## API (черновик)
+- `GET /api/schema` — получить разрешённые схемы и таблицы.
+- `GET /api/categories` — список уникальных значений для столбца.
+- `POST /api/query` — сгенерировать SQL из пользовательского запроса (SGR).
+- `POST /api/execute` — выполнить SQL (с автоматическим LIMIT).
+
+## Что дальше
+См. `docs/design.md` для архитектуры и плана следующих шагов. Ближайшие задачи:
+- Подключить `sgr-agent-core` промпты и хранилище состояний диалога.
+- Добавить кеширование схемы/категорий и регистрацию событий для фронтенда.
+- Настроить CI-проверки (ruff/pytest) и smoke-тесты API.
 ## Что дальше
 См. `docs/design.md` для архитектуры и плана следующих шагов. Ближайшая задача — создать каркас uv-проекта с backend API и интеграцией `sgr-agent-core`.
