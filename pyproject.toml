@@ -1,0 +1,27 @@
+[project]
+name = "text2sql-agent"
+version = "0.1.0"
+description = "Russian Text2SQL agent on Trino using schema-guided reasoning"
+authors = [{ name = "Text2SQL Team" }]
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi>=0.111",
+  "pydantic>=2.6",
+  "trino>=0.329",
+  "httpx>=0.27",
+  "uvicorn>=0.30",
+  "sgr-agent-core @ git+https://github.com/vamplabAI/sgr-agent-core.git",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.4",
+]
+
+[tool.uv]
+managed = true
